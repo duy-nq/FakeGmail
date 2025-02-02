@@ -1,11 +1,10 @@
-import IconButton from "@/components/buttons/IconButton";
 import { Text, View } from "react-native";
 
-export default function GmailPage() {
+export default function ChatPage() {
     return (
         <View>
             <Text>
-                No Way!!!
+                This is Chat
             </Text>
         </View>
     );
