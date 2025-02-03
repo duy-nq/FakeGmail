@@ -1,4 +1,5 @@
 import { Stack } from "expo-router";
+import { StyleSheet } from "react-native";
 
 export default function RootLayout() {
     return (
@@ -22,3 +23,9 @@ export default function RootLayout() {
         </Stack>
     );
 };
+
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: "white"
+    }
+});

@@ -1,0 +1,1 @@
+export const TEXT_SEARCH_BAR = "Search in emails..."; 

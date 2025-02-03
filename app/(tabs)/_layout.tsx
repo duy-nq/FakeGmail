@@ -1,3 +1,4 @@
+import { COLOR_BAR } from "@/constants/color";
 import { IONICONS_MAIL, IONICONS_MEET, IONICONS_MAIL_FOCUS, IONICONS_MEET_FOCUS, MATERIALICONS_CHAT, MATERIALICONS_CHAT_FOCUS } from "@/constants/iconConvension";
 import { Tabs } from "expo-router";
 import { StyleSheet } from "react-native";
@@ -78,6 +79,7 @@ const styles = StyleSheet.create({
     },
     tabBarItemStyle: {
         alignContent: "space-around",
-        paddingTop:5
+        paddingTop:5,
+        backgroundColor: COLOR_BAR
     }
 });

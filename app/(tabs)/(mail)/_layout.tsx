@@ -1,4 +1,5 @@
 import FloatingButton from "@/components/buttons/FloatingButton";
+import CustomSearchBar from "@/components/search/SearchBar";
 import { Stack } from "expo-router";
 import { StyleSheet, View } from "react-native";
 
@@ -22,6 +23,6 @@ export default function MailLayout() {
 
 const styles = StyleSheet.create({
     viewStyle: {
-        flex: 1
+        flex: 1,
     } 
 });

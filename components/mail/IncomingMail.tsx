@@ -1,3 +1,4 @@
+import { COLOR_FONT_BOLD, COLOR_FONT_NORMAL, COLOR_STAR, COLOR_STAR_FOCUS } from "@/constants/color";
 import { IONICONS_STAR, IONICONS_STAR_FOCUS } from "@/constants/iconConvension";
 import { useState } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
@@ -9,10 +10,11 @@ type Props = {
     content: string,
     timestamp: string,
     star?: boolean,
+    unread?: boolean
 }
 
-export default function IncomingMail() {
-    const [isStarred, setIsStarred] = useState(false);
+export default function IncomingMail({ sender, title, content, timestamp="1 Th3", star=false, unread=false } : Props) {
+    const [isStarred, setIsStarred] = useState(star);
 
     // Function to handle icon toggle on press
     const toggleIcon = () => {
@@ -31,18 +33,37 @@ export default function IncomingMail() {
             />
             <View style={styles.mailContainer}>
                 <View style={styles.mail}>
-                    <Text style={styles.sender} numberOfLines={1} ellipsizeMode="tail">Coursera</Text>
-                    <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">Welcome to the Google UX Design auwdh awudh uaw uawdh uawd huawd huawdh auw!</Text>
-                    <Text style={styles.content} numberOfLines={1} ellipsizeMode="tail">Hi</Text>
+                    <Text 
+                        style={unread ? [styles.sender, styles.unread] : [styles.sender, styles.read]} 
+                        numberOfLines={1} 
+                        ellipsizeMode="tail"
+                    >
+                        {sender}
+                    </Text>
+                    <Text 
+                        style={unread ? [styles.title, styles.unread] : [styles.title, styles.read]} 
+                        numberOfLines={1} 
+                        ellipsizeMode="tail"
+                    >
+                        {title}
+                    </Text>
+                    <Text 
+                        style={styles.content} 
+                        numberOfLines={1} 
+                        ellipsizeMode="tail"
+                    >
+                        {content}
+                    </Text>
                 </View>
                 <View style={styles.addition}>
-                    <Text>1 Th2</Text>
+                    <Text>{timestamp}</Text>
                         <TouchableOpacity onPress={toggleIcon}>
                     {/* Render the icon based on the state */}
                     <Icon 
-                        name={isStarred ? IONICONS_STAR : IONICONS_STAR_FOCUS} 
+                        name={isStarred ? IONICONS_STAR_FOCUS : IONICONS_STAR} 
                         size={20} 
-                        color={isStarred ? "#786768" : "#B05E62"} 
+                        color={isStarred ? COLOR_STAR_FOCUS : COLOR_STAR}
+                        style={{paddingBottom: 0.5}}
                     />
                 </TouchableOpacity>                
                 </View>
@@ -51,7 +72,7 @@ export default function IncomingMail() {
     );
 };
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
     container: {
         flexDirection: "row",
         alignItems: "flex-start",
@@ -83,18 +104,23 @@ const styles = StyleSheet.create({
     },
     sender: {
         fontSize: 18,
-        fontWeight: 600,
     },
     title: {
         fontSize: 14,
-        fontWeight: 600,
     },
     content: {
         fontSize: 14,
-        color: "gray",
+        color: COLOR_FONT_NORMAL,
     },
     timestamp: {
         fontSize: 14,
         color: "gray"
+    },
+    unread: {
+        fontWeight: 600,
+        color: COLOR_FONT_BOLD,
+    },
+    read: {
+        color: COLOR_FONT_NORMAL,
     }
 });
