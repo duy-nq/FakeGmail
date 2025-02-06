@@ -1,17 +1,39 @@
 import { COLOR_BAR, COLOR_FONT_BOLD, COLOR_FONT_NORMAL } from "@/constants/color";
 import { TEXT_SEARCH_BAR } from "@/constants/en";
-import { IONICONS_MENU } from "@/constants/iconConvension";
-import { useState } from "react";
-import { Image, StyleSheet, TextInput, View } from "react-native";
+import { IONICONS_BACK, IONICONS_MENU } from "@/constants/iconConvension";
+import { useRef, useState } from "react";
+import { Animated, Image, StyleSheet, TextInput, View } from "react-native";
 import IonIcons from "react-native-vector-icons/Ionicons"
 
 export default function CustomSearchBar() {
     const [searchQuery, setSearchQuery] = useState("");
-    
+    const [onSearch, setOnSearch] = useState(false);
+    const cancelButtonOpacity = useRef(new Animated.Value(0)).current;
+
+
+    const handleFocus = () => {
+        setOnSearch(true);
+        Animated.timing(cancelButtonOpacity, {
+            toValue: 1,
+            duration: 200,
+            useNativeDriver: true,
+        }).start();
+    };
+
+    const handleCancel = () => {
+        setSearchQuery("");
+        setOnSearch(false);
+        Animated.timing(cancelButtonOpacity, {
+            toValue: 0,
+            duration: 200,
+            useNativeDriver: true,
+        }).start();
+    };
+
     return (
         <View style={styles.container}>
             <IonIcons 
-                name={IONICONS_MENU}
+                name={onSearch ? IONICONS_BACK : IONICONS_MENU}
                 size={26} 
                 style={styles.iconMenu}
             />
@@ -21,6 +43,8 @@ export default function CustomSearchBar() {
                     value={searchQuery}
                     onChangeText={(text) => setSearchQuery(text)}
                     style={styles.inputArea}
+                    onFocus={handleFocus}
+                    onBlur={handleCancel}
                 />
             </View>
             <Image

@@ -13,7 +13,13 @@ export default function TabsLayout() {
     }
 
     return (
-        <Tabs>
+        <Tabs
+            screenOptions={
+                {
+                    tabBarHideOnKeyboard: true,
+                }
+            }
+        >
             <Tabs.Screen 
                 name="(mail)"
                 options={

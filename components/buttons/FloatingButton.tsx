@@ -9,7 +9,7 @@ type Props = {
 export default function FloatingButton({ expand=true } : Props) {
     return (
         <TouchableOpacity style={styles.floatingButton}>
-            <MaterialCommunityIcon name={MATERIALCOMMUNITYICONS_PENCIL} size={24} />
+            <MaterialCommunityIcon name={MATERIALCOMMUNITYICONS_PENCIL} size={26} />
             {
                 expand && 
                 <Text style={styles.buttonText}>
