@@ -5,7 +5,7 @@ export default function NotFound() {
     return (
         <View>
             <Text>Okay! Nothing here!</Text>
-            <Link href={"/(tabs)/mail"}>Back!</Link>
+            <Link href={"/"}>Back!</Link>
         </View>
     );
 };
