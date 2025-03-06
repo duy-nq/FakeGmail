@@ -16,10 +16,18 @@ import IconMT from "react-native-vector-icons/MaterialCommunityIcons";
 import { COLOR_MODAL } from "@/constants/color";
 import Profile from "../commons/Profile";
 import { useEmailStore } from "@/stores/email.store";
+import { useMainStore } from "@/stores/main.store";
+import { useRouter } from "expo-router";
 
 export default function ProfileModal() {
   const { modalVisible, setModalVisible } = useModalContext();
   const { emails } = useEmailStore();
+  const { profile, others } = useMainStore();
+  const router = useRouter();
+
+  const handleChange = () => {
+    router.replace("/login");
+  };
 
   return (
     <Modal
@@ -48,8 +56,13 @@ export default function ProfileModal() {
           </View>
 
           <ScrollView style={styles.subContainer}>
-            <Profile name="John Doe" email="johndoe@gmail.com" unread={emails.length} />
-            <Pressable style={styles.manageButton}>
+            <Profile
+              name={profile.displayName}
+              email={profile.email}
+              imageUrl={profile.imageUrl}
+              unread={emails.length}
+            />
+            <Pressable style={styles.manageButton} onPress={handleChange}>
               <Text style={styles.manageButtonText}>
                 Manage your Google Account
               </Text>
@@ -66,8 +79,15 @@ export default function ProfileModal() {
             </View>
             <View style={styles.divider} />
 
-            <Profile name="Nam Cua" email="namcua@gmail.com" unread={27} />
-            <Profile name="Cua Nam" email="cuanam@gmail.com" unread={102} />
+            {others.map((other) => (
+              <Profile
+                key={other.email}
+                name={other.displayName}
+                email={other.email}
+                imageUrl={other.imageUrl}
+                unread={14}
+              />
+            ))}
 
             <View style={styles.optionsSection}>
               <TouchableOpacity style={styles.option}>
@@ -76,7 +96,7 @@ export default function ProfileModal() {
               </TouchableOpacity>
 
               <TouchableOpacity style={styles.option}>
-                <IconAW5 name="user-cog" size={16} color="#5f6368"/>
+                <IconAW5 name="user-cog" size={16} color="#5f6368" />
                 <Text style={styles.optionText}>
                   Manage accounts on this device
                 </Text>

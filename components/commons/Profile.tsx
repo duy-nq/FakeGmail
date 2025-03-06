@@ -15,7 +15,7 @@ export default function Profile ({ name, email, imageUrl, unread } : Props) {
                 style={styles.avatar}
                 source={
                     {
-                        uri: 'https://reactnative.dev/img/tiny_logo.png',
+                        uri: imageUrl ? imageUrl : 'https://reactnative.dev/img/tiny_logo.png',
                     }
                 }
             />
