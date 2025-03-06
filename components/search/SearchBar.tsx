@@ -2,14 +2,15 @@ import { COLOR_BAR, COLOR_FONT_BOLD, COLOR_FONT_NORMAL } from "@/constants/color
 import { TEXT_SEARCH_BAR } from "@/constants/en";
 import { IONICONS_BACK, IONICONS_MENU } from "@/constants/iconConvension";
 import { useRef, useState } from "react";
-import { Animated, Image, StyleSheet, TextInput, View } from "react-native";
-import IonIcons from "react-native-vector-icons/Ionicons"
+import { Animated, Image, Pressable, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
+import IonIcons from "react-native-vector-icons/Ionicons";
+import { useModalContext } from "@/contexts/ModalContext";
 
 export default function CustomSearchBar() {
     const [searchQuery, setSearchQuery] = useState("");
     const [onSearch, setOnSearch] = useState(false);
     const cancelButtonOpacity = useRef(new Animated.Value(0)).current;
-
+    const { setModalVisible } = useModalContext();
 
     const handleFocus = () => {
         setOnSearch(true);
@@ -37,7 +38,7 @@ export default function CustomSearchBar() {
                 size={26} 
                 style={styles.iconMenu}
             />
-            <View style={styles.input}>
+            <View style={styles.input} >
                 <TextInput 
                     placeholder={TEXT_SEARCH_BAR}
                     value={searchQuery}
@@ -47,14 +48,19 @@ export default function CustomSearchBar() {
                     onBlur={handleCancel}
                 />
             </View>
-            <Image
-                style={styles.profile}
-                source={
-                    {
-                        uri: 'https://reactnative.dev/img/tiny_logo.png',
+            <Pressable
+                onPress={() => setModalVisible(true)}
+                onPressOut={() => setModalVisible(false)}
+            >
+                <Image
+                    style={styles.profile}
+                    source={
+                        {
+                            uri: 'https://reactnative.dev/img/tiny_logo.png',
+                        }
                     }
-                }
-            />
+                />
+            </Pressable>
         </View>
     );
 }

@@ -10,3 +10,4 @@ export const COLOR_FONT_NORMAL = "#57423F";
 export const COLOR_FONT_BOLD = "#202124";
 
 export const COLOR_BAR = "#E9E7EC";
+export const COLOR_MODAL = "#ECECF4";
