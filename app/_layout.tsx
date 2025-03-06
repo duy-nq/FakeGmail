@@ -1,29 +1,25 @@
 import { Slot } from "expo-router";
-import { View, StyleSheet } from "react-native";
-import { useMainStore } from "@/stores/main.store";
 import { useEffect } from "react";
+import { ScrollProvider } from "@/contexts/ScrollContextMail";
+import { useEmailStore } from "@/stores/email.store";
+import { ModalProvider } from "@/contexts/ModalContext";
 
 export default function RootLayout() {
-    const { fGetTabs } = useMainStore();
+	const { fGetEmails } = useEmailStore();
 
-    const fetchData = async () => {
-        await fGetTabs();
-    };
+	const fetchData = async () => {
+		await fGetEmails();
+	};
 
-    useEffect(() => {
-        fetchData();
-    }, []);
-    
-    return (
-        <View style={styles.container}>
-            <Slot />
-        </View>
-    );
+	useEffect(() => {
+			fetchData();
+	}, []);
+	
+	return (
+	<ScrollProvider>
+		<ModalProvider>
+			<Slot />
+		</ModalProvider>
+	</ScrollProvider>
+	);
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "white",
-    },
-});
