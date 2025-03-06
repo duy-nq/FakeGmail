@@ -3,10 +3,12 @@ import MaterialCommunityIcon from "react-native-vector-icons/MaterialCommunityIc
 import { StyleSheet, Pressable, Animated, View } from "react-native";
 import { useRef } from "react";
 import { useScrollContextMail } from "@/contexts/ScrollContextMail";
+import { useRouter } from "expo-router";
 
 export default function FloatingButton() {
   const animatedValue = useRef(new Animated.Value(0)).current;
   const { floatingButtonTextPosition, floatingButtonWidth } = useScrollContextMail();
+const router = useRouter();
 
   const onPressIn = () => {
     Animated.timing(animatedValue, {
@@ -22,6 +24,11 @@ export default function FloatingButton() {
       duration: 150,
       useNativeDriver: false,
     }).start();
+  };
+
+  const handlePress = () => {
+    console.log("Pressed");
+    router.push("/editor");
   };
 
   const backgroundColor = animatedValue.interpolate({
@@ -41,6 +48,7 @@ export default function FloatingButton() {
         style={styles.pressableArea}
         onPressIn={onPressIn}
         onPressOut={onBlur}
+        onPress={handlePress}
       >
         <MaterialCommunityIcon name={MATERIALCOMMUNITYICONS_PENCIL} size={26} />
         <View style={styles.textContainer}>
