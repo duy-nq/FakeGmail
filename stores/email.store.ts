@@ -1,13 +1,14 @@
 import { database } from "@/firebase";
 import Email from "@/types/email.type";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 import { create } from "zustand";
 
 interface EmailStore {
   emails: Email[];
   setEmailStore: <T extends keyof EmailStore>(key: T, value: EmailStore[T]) 
     => void;
-  fGetEmails: () => Promise<boolean>;
+  fGetEmails: (email: string) => Promise<boolean>;
+  fSendEmail: (email: Email) => Promise<string | null>;
 }
 
 export const useEmailStore = create<EmailStore>((set) => ({
@@ -17,10 +18,10 @@ export const useEmailStore = create<EmailStore>((set) => ({
       [key]: value,
     });
   },
-  fGetEmails: async () => {
-    try {     
+  fGetEmails: async (email) => {
+    try {           
       const mailsRef = collection(database, "emails");
-      const q = query(mailsRef, where("isRead", "==", false));
+      const q = query(mailsRef, where("recipients", "array-contains", email));
 
       const querySnapshot = await getDocs(q);
 
@@ -34,6 +35,18 @@ export const useEmailStore = create<EmailStore>((set) => ({
     } catch (error) {
       console.log(error);
       return false;
+    }
+  },
+  fSendEmail: async (email) => {
+    const {id, ...emailData} = email;
+    
+    try {
+      const mailsCollectionRef = collection(database, "emails");
+      const mailRef = await addDoc(mailsCollectionRef, emailData);
+      return mailRef.id;
+    } catch (error) {
+      console.log(error);
+      return null;  
     }
   },
 }));

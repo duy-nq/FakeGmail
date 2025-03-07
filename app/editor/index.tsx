@@ -14,6 +14,8 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import { useEmailStore } from "@/stores/email.store";
+import Email from "@/types/email.type";
 
 export default function Editor() {
   const router = useRouter();
@@ -22,16 +24,38 @@ export default function Editor() {
   const [body, setBody] = useState("");
 
   const { profile } = useMainStore();
+  const { fSendEmail } = useEmailStore();
 
   const handleBack = () => {
     router.back();
   };
 
-  const handleSend = () => {
-    console.log("Sending email to:", recipient);
-    console.log("Subject:", subject);
-    console.log("Body:", body);
-    router.back();
+  const handleSend = async () => {
+    const payload: Email = {
+      id: "",
+      sender: profile.email,
+      senderName: profile.displayName,
+      senderImageUrl: profile.imageUrl,
+      recipients: recipient.split(","),
+      subject: subject,
+      body: body,
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+      attachments: [],
+      labels: [],
+      isRead: false,
+      isStarred: false,
+      isDelete: false,
+      isDraft: false,
+    }
+
+    if (await fSendEmail(payload) != null) {
+      alert("Email sent successfully");
+      router.back();
+    } else {
+      alert("Failed to send email");
+      return;
+    }
   };
 
   return (
