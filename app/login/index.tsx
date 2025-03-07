@@ -29,9 +29,12 @@ export default function LoginScreen() {
 
   const fetchData = async () => {
     try {
-      await Promise.all([fGetProfile(email), fGetOthers(email)]);
+      const profile = await fGetProfile(email);
+      if (!profile) {
+        return false;
+      }
 
-      await fGetEmails();
+      await Promise.all([fGetEmails(email), fGetOthers(email)]); 
 
       return true;
     } catch (error) {
@@ -42,6 +45,12 @@ export default function LoginScreen() {
 
   const handleNext = async () => {
     if (validateEmail(email)) {
+      if (email == mainEmail) {
+        console.log("Email already logged in");
+        alert("Email already logged in, redirecting to home page");
+        router.replace("/");
+        return;
+      }
       console.log("Proceeding with email:", email);
     } else {
       setIsValid(false);
@@ -54,6 +63,7 @@ export default function LoginScreen() {
       router.replace("/");
     } else {
       console.log("Login failed");
+      alert("Cannot find your email. Please try again.");
       return;
     }
   };

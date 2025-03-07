@@ -10,12 +10,12 @@ export default function RootLayout() {
 
 	const fetchData = async () => {
     try {
+			await fGetProfile(mainEmail);
+
       await Promise.all([
-        fGetProfile(mainEmail),
+        fGetEmails(mainEmail),
         fGetOthers(mainEmail)
       ]);
-      
-      await fGetEmails();
       
       return true;
     } catch (error) {
