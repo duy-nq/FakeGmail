@@ -35,7 +35,7 @@ export default function IncomingMail({ email }: IncomingMailProps) {
         <View style={styles.mail}>
           <Text
             style={
-              email.isRead
+              !email.isRead
                 ? [styles.sender, styles.unread]
                 : [styles.sender, styles.read]
             }
@@ -46,7 +46,7 @@ export default function IncomingMail({ email }: IncomingMailProps) {
           </Text>
           <Text
             style={
-              email.isRead
+              !email.isRead
                 ? [styles.title, styles.unread]
                 : [styles.title, styles.read]
             }
