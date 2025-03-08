@@ -16,22 +16,24 @@ import {
 import { mockEmails } from "@/constants/mailData";
 import { useScrollContextMail } from "@/contexts/ScrollContextMail";
 import { useEmailStore } from "@/stores/email.store";
+import { useMainStore } from "@/stores/main.store";
 
 const colors = ["#34A853", "#4285F4", "#EA4335", "#FBBC05"]; // Google colors
 
 export default function MailList() {
   const [refreshing, setRefreshing] = useState(false);
   const [spinnerColor] = useState(new Animated.Value(0)); // Animated value for color transition
-  const { emails } = useEmailStore();
+  const { emails, fGetEmails } = useEmailStore();
+  const { mainEmail } = useMainStore();
 
   // Function to refresh mails
-  const onRefresh = () => {
+  const onRefresh = async () => {
     setRefreshing(true);
     startColorAnimation(); // Start animation
 
-    setTimeout(() => {
+    await fGetEmails(mainEmail).then(() => {
       setRefreshing(false);
-    }, 1000);
+    });
   };
 
   // Function to animate spinner color
