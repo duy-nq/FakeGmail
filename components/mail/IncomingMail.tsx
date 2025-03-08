@@ -9,7 +9,12 @@ import Email from "@/types/email.type";
 import { formatEmailTimestamp } from "@/utils/datetime.util";
 import extractPlainText from "@/utils/extract.util";
 import { useState } from "react";
-import { Image, StyleSheet, Text, Touchable, TouchableOpacity, View } from "react-native";
+import {
+  Image,
+  StyleSheet,
+  Text, TouchableOpacity,
+  View
+} from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useRouter } from "expo-router";
 
@@ -33,54 +38,54 @@ export default function IncomingMail({ email }: IncomingMailProps) {
   return (
     <TouchableOpacity key={email.id} onPress={onPress}>
       <View style={styles.container}>
-      <Image
-        style={styles.avatar}
-        source={{
-          uri: email.senderImageUrl,
-        }}
-      />
-      <View style={styles.mailContainer}>
-        <View style={styles.mail}>
-          <Text
-            style={
-              !email.isRead
-                ? [styles.sender, styles.unread]
-                : [styles.sender, styles.read]
-            }
-            numberOfLines={1}
-            ellipsizeMode="tail"
-          >
-            {email.senderName}
-          </Text>
-          <Text
-            style={
-              !email.isRead
-                ? [styles.title, styles.unread]
-                : [styles.title, styles.read]
-            }
-            numberOfLines={1}
-            ellipsizeMode="tail"
-          >
-            {email.subject}
-          </Text>
-          <Text style={styles.content} numberOfLines={1} ellipsizeMode="tail">
-            {extractPlainText(email.body)}
-          </Text>
-        </View>
-        <View style={styles.addition}>
-          <Text>{formatEmailTimestamp(email.createdAt)}</Text>
-          <TouchableOpacity onPress={toggleIcon}>
-            {/* Render the icon based on the state */}
-            <Icon
-              name={isStarred ? IONICONS_STAR_FOCUS : IONICONS_STAR}
-              size={20}
-              color={isStarred ? COLOR_STAR_FOCUS : COLOR_STAR}
-              style={{ paddingBottom: 0.5 }}
-            />
-          </TouchableOpacity>
+        <Image
+          style={styles.avatar}
+          source={{
+            uri: email.senderImageUrl,
+          }}
+        />
+        <View style={styles.mailContainer}>
+          <View style={styles.mail}>
+            <Text
+              style={
+                !email.isRead
+                  ? [styles.sender, styles.unread]
+                  : [styles.sender, styles.read]
+              }
+              numberOfLines={1}
+              ellipsizeMode="tail"
+            >
+              {email.senderName}
+            </Text>
+            <Text
+              style={
+                !email.isRead
+                  ? [styles.title, styles.unread]
+                  : [styles.title, styles.read]
+              }
+              numberOfLines={1}
+              ellipsizeMode="tail"
+            >
+              {email.subject}
+            </Text>
+            <Text style={styles.content} numberOfLines={1} ellipsizeMode="tail">
+              {extractPlainText(email.body)}
+            </Text>
+          </View>
+          <View style={styles.addition}>
+            <Text>{formatEmailTimestamp(email.createdAt)}</Text>
+            <TouchableOpacity onPress={toggleIcon}>
+              {/* Render the icon based on the state */}
+              <Icon
+                name={isStarred ? IONICONS_STAR_FOCUS : IONICONS_STAR}
+                size={20}
+                color={isStarred ? COLOR_STAR_FOCUS : COLOR_STAR}
+                style={{ paddingBottom: 0.5 }}
+              />
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
-    </View>
     </TouchableOpacity>
   );
 }
