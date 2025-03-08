@@ -5,15 +5,17 @@ import {
   StyleSheet,
   SafeAreaView,
   TouchableOpacity,
-  ScrollView, useWindowDimensions
+  ScrollView,
+  useWindowDimensions,
 } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import { useEmailStore } from "@/stores/email.store";
 import Icon from "react-native-vector-icons/Ionicons";
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import moment from "moment";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import IonIcons from "react-native-vector-icons/Ionicons";
 import Email from "@/types/email.type";
-import RenderHTML from "react-native-render-html";
+import RenderView from "@/components/renders/RenderView";
+import Overview from "@/components/mail/Overview";
 
 export default function EmailPreview() {
   const [email, setEmail] = useState<Email | null>(null);
@@ -44,8 +46,6 @@ export default function EmailPreview() {
     );
   }
 
-  const formattedDate = moment(email.createdAt).format("MMM D, YYYY, h:mm A");
-
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
@@ -56,16 +56,16 @@ export default function EmailPreview() {
 
         <View style={styles.headerActions}>
           <TouchableOpacity style={styles.headerButton}>
-            <Icon name="archive-outline" size={24} color="#5f6368" />
+            <IonIcons name="archive-outline" size={24} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.headerButton}>
-            <Icon name="trash-outline" size={24} color="#5f6368" />
+            <MaterialCommunityIcons name="trash-can-outline" size={24} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.headerButton}>
-            <MaterialIcons name="email-outline" size={24} color="#5f6368" />
+            <IonIcons name="mail-unread-outline" size={24} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.headerButton}>
-            <MaterialIcons name="more-vert" size={24} color="#5f6368" />
+            <MaterialCommunityIcons name="dots-vertical" size={24} />
           </TouchableOpacity>
         </View>
       </View>
@@ -83,112 +83,18 @@ export default function EmailPreview() {
                 </View>
               ))}
           </View>
+
+          <TouchableOpacity>
+            <IonIcons name="star-outline" size={24} />
+          </TouchableOpacity>
         </View>
 
         {/* Sender info */}
-        <View style={styles.senderContainer}>
-          <View style={styles.senderAvatar}>
-            <Text style={styles.avatarText}>
-              {email.sender ? email.senderName.charAt(0).toUpperCase() : "?"}
-            </Text>
-          </View>
-
-          <View style={styles.senderInfo}>
-            <View style={styles.senderNameRow}>
-              <Text style={styles.senderName}>{email.senderName}</Text>
-              <Text style={styles.emailDate}>{formattedDate}</Text>
-            </View>
-
-            <Text style={styles.senderEmail}>
-              {email.sender}{" "}
-              {email.recipients &&
-                `to ${email.recipients.map((t) => t).join(", ")}`}
-            </Text>
-          </View>
-
-          <View style={styles.emailActions}>
-            <TouchableOpacity style={styles.actionButton}>
-              <Icon name="star-outline" size={22} color="#5f6368" />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.actionButton}>
-              <MaterialIcons name="reply" size={22} color="#5f6368" />
-            </TouchableOpacity>
-          </View>
-        </View>
+        <Overview email={email} />
 
         {/* Email body */}
         <View style={styles.emailBody}>
-          <RenderHTML
-            contentWidth={width}
-            source={{ html: email.body }}
-            tagsStyles={{
-              p: {
-                fontSize: 16,
-                color: "#202124",
-                lineHeight: 24,
-                marginVertical: 1,
-              },
-              br: {
-                display: "none",
-              },
-              a: {
-                color: "#1a73e8",
-                textDecorationLine: "underline",
-              },
-              h1: {
-                fontSize: 24,
-                fontWeight: "bold",
-                color: "#202124",
-                marginBottom: 8,
-              },
-              h2: {
-                fontSize: 20,
-                fontWeight: "bold",
-                color: "#202124",
-                marginBottom: 6,
-              },
-              h3: {
-                fontSize: 18,
-                fontWeight: "bold",
-                color: "#202124",
-                marginBottom: 4,
-              },
-              ul: {
-                marginLeft: 20,
-                paddingLeft: 10,
-              },
-              ol: {
-                marginLeft: 20,
-                paddingLeft: 10,
-              },
-              li: {
-                fontSize: 16,
-                color: "#202124",
-                lineHeight: 24,
-                marginBottom: 4,
-              },
-              blockquote: {
-                fontStyle: "italic",
-                borderLeftWidth: 4,
-                borderLeftColor: "#ccc",
-                paddingLeft: 10,
-                marginVertical: 8,
-                color: "#5f6368",
-              },
-              img: {
-                maxWidth: "80%",
-                height: "auto",
-                marginVertical: 10,
-              },
-              strong: {
-                fontWeight: "bold",
-              },
-              em: {
-                fontStyle: "italic",
-              },
-            }}
-          />
-
+          <RenderView email={email} />
           {email.attachments && email.attachments.length > 0 && (
             <View style={styles.attachmentsContainer}>
               <Text style={styles.attachmentsTitle}>
@@ -226,29 +132,29 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     height: 56,
-    paddingHorizontal: 8,
-    borderBottomWidth: 1,
-    borderBottomColor: "#f1f3f4",
+    paddingHorizontal: 10,
   },
   headerActions: {
     flexDirection: "row",
+    gap: 18,
   },
-  headerButton: {
-    padding: 10,
-  },
+  headerButton: {},
   scrollView: {
     flex: 1,
   },
   subjectContainer: {
-    padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: "#f1f3f4",
+    paddingVertical: 18,
+    marginHorizontal: 12,
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
   },
   subject: {
     fontSize: 20,
     fontWeight: "500",
     color: "#202124",
-    marginBottom: 8,
+    flex: 1,
   },
   labelContainer: {
     flexDirection: "row",
