@@ -6,7 +6,7 @@ import {
 } from "@/constants/color";
 import { IONICONS_STAR, IONICONS_STAR_FOCUS } from "@/constants/iconConvension";
 import Email from "@/types/email.type";
-import formatEmailTimestamp from "@/utils/datetime.util";
+import { formatEmailTimestamp } from "@/utils/datetime.util";
 import extractPlainText from "@/utils/extract.util";
 import { useState } from "react";
 import { Image, StyleSheet, Text, Touchable, TouchableOpacity, View } from "react-native";
