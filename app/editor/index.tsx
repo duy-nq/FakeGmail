@@ -16,6 +16,9 @@ import Icon from "react-native-vector-icons/Ionicons";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { useEmailStore } from "@/stores/email.store";
 import Email from "@/types/email.type";
+import "react-quill/dist/quill.snow.css";
+
+import formatTextToSave from "@/utils/convert.utitl";
 
 export default function Editor() {
   const router = useRouter();
@@ -31,14 +34,24 @@ export default function Editor() {
   };
 
   const handleSend = async () => {
+    if (recipient === "") {
+      alert("Recipient is required");
+      return;
+    }
+
+    if (body === "") {
+      alert("Email body is required");
+      return;
+    }
+    
     const payload: Email = {
       id: "",
       sender: profile.email,
       senderName: profile.displayName,
       senderImageUrl: profile.imageUrl,
       recipients: recipient.split(","),
-      subject: subject,
-      body: body,
+      subject: subject === "" ? "No Subject" : subject,
+      body: formatTextToSave(body),
       createdAt: Date.now(),
       updatedAt: Date.now(),
       attachments: [],
@@ -171,7 +184,7 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   inputLabel: {
-    width: 40,
+    width: 40, 
     fontSize: 16,
     color: "#5f6368",
   },

@@ -7,6 +7,7 @@ import {
 import { IONICONS_STAR, IONICONS_STAR_FOCUS } from "@/constants/iconConvension";
 import Email from "@/types/email.type";
 import formatEmailTimestamp from "@/utils/datetime.util";
+import extractPlainText from "@/utils/extract.util";
 import { useState } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -56,7 +57,7 @@ export default function IncomingMail({ email }: IncomingMailProps) {
             {email.subject}
           </Text>
           <Text style={styles.content} numberOfLines={1} ellipsizeMode="tail">
-            {email.body}
+            {extractPlainText(email.body)}
           </Text>
         </View>
         <View style={styles.addition}>
