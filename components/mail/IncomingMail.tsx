@@ -9,8 +9,9 @@ import Email from "@/types/email.type";
 import formatEmailTimestamp from "@/utils/datetime.util";
 import extractPlainText from "@/utils/extract.util";
 import { useState } from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, Text, Touchable, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
+import { useRouter } from "expo-router";
 
 interface IncomingMailProps {
   email: Email;
@@ -18,14 +19,20 @@ interface IncomingMailProps {
 
 export default function IncomingMail({ email }: IncomingMailProps) {
   const [isStarred, setIsStarred] = useState(email.isStarred);
+  const router = useRouter();
 
   // Function to handle icon toggle on press
   const toggleIcon = () => {
     setIsStarred((prev) => !prev); // Toggle the state value
   };
 
+  const onPress = () => {
+    router.push(`/preview/${email.id}`);
+  };
+
   return (
-    <View style={styles.container}>
+    <TouchableOpacity key={email.id} onPress={onPress}>
+      <View style={styles.container}>
       <Image
         style={styles.avatar}
         source={{
@@ -74,6 +81,7 @@ export default function IncomingMail({ email }: IncomingMailProps) {
         </View>
       </View>
     </View>
+    </TouchableOpacity>
   );
 }
 
