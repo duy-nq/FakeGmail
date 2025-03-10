@@ -5,8 +5,7 @@ import {
   StyleSheet,
   SafeAreaView,
   TouchableOpacity,
-  ScrollView,
-  useWindowDimensions,
+  ScrollView
 } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import { useEmailStore } from "@/stores/email.store";
@@ -22,8 +21,6 @@ export default function EmailPreview() {
   const router = useRouter();
   const { id } = useLocalSearchParams();
   const { emails } = useEmailStore();
-
-  const { width } = useWindowDimensions();
 
   useEffect(() => {
     if (id && emails) {
