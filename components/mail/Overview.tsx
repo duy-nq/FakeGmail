@@ -122,7 +122,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     flexDirection: "row",
-    gap: 18,
+    gap: 16,
   },
   mail: {
     justifyContent: "center",
