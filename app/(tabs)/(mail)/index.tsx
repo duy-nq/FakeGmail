@@ -70,6 +70,7 @@ export default function MailList() {
             COLOR_GOOGLE_YELLOW,
             COLOR_GOOGLE_GREEN,
           ]}
+          tintColor={COLOR_GOOGLE_BLUE}
         />
       }
       ListHeaderComponent={
