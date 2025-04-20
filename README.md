@@ -4,9 +4,19 @@ A Gmail-inspired application built with Expo.
 
 ## Screenshots and Demo
 
-### App Interface
+### Android Screenshots
 
-[Screenshots will be added here]
+| ![Sign-In Page](public/screenshot/android/SignInPage.jpg) | ![Accounts Management](public/screenshot/android/Accounts.jpg) | ![Mail Page](public/screenshot/android/MailPage.jpg) |
+|:--------------------------------------------------------:|:-------------------------------------------------------------:|:---------------------------------------------------:|
+| *A simple sign-in page for basic login functionality*   | *Manage multiple accounts with ease*                         | *A clean and straightforward mail page design*     |
+
+| ![Search Bar](public/screenshot/android/SearchBar.jpg) | ![Compose Email](public/screenshot/android/Compose.jpg) | ![HTML Email View](public/screenshot/android/MailWithHTML.jpg) |
+|:-----------------------------------------------------:|:------------------------------------------------------:|:-------------------------------------------------------------:|
+| *A functional search bar for finding emails quickly* | *Compose emails with basic formatting options*         | *Displays HTML email content in a readable format*            |
+
+### iOS Screenshots
+
+iOS screenshots will be released soon. Stay tuned!
 
 ### Key Features in Action
 
@@ -52,11 +62,28 @@ expo start
 
 ## Usage
 
-[Include basic usage instructions here]
+To get started with FakeGmail, follow these steps:
+
+1. **Launch the Application**  
+  Start the development server using the command below, and scan the QR code with the Expo Go app on your mobile device:  
+  ```bash
+  expo start
+  ```
+
+2. **Sign In**  
+  Use the sign-in page to enter your email address registered on Firebase. No password is required. If the email is valid on the server, you will be redirected to the mail list page.
+
+3. **Explore Features**  
+  - View your email list and try out sorting and filtering options.  
+  - Compose a new email using the "Compose" button and experiment with formatting tools.  
+  - Search for specific emails using the search bar.  
+  - Manage multiple accounts seamlessly.
+
+Enjoy exploring the core functionalities of FakeGmail and feel free to customize the app to suit your needs!
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+We would be thrilled if you are interested in enhancing the UI/UX of FakeGmail to better align with the real Gmail experience! Your contributions to improve the design, usability, and overall user experience are highly appreciated. Feel free to share your ideas, submit design mockups, or implement changes that bring the application closer to the polished look and feel of Gmail. Let's collaborate to make FakeGmail even better!
 
 ## License
 
